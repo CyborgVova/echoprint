@@ -28,12 +28,10 @@ func New(cfg *config.Config) *App {
 		c.JSON(http.StatusOK, gin.H{"status": "health"})
 	})
 
-	application := &App{
+	return &App{
 		e:   e,
 		cfg: cfg,
 	}
-
-	return application
 }
 
 func (a *App) Start() error {
