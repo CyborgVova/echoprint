@@ -2,6 +2,10 @@ package main
 
 import (
 	"flag"
+	"log"
+
+	"github.com/cyborgvova/echoprint/app"
+	"github.com/cyborgvova/echoprint/config"
 )
 
 var (
@@ -16,4 +20,15 @@ func init() {
 
 func main() {
 	flag.Parse()
+
+	cfg := &config.Config{
+		Text: text,
+		Port: port,
+	}
+
+	application := app.New(cfg)
+
+	if err := application.Start(); err != nil {
+		log.Fatal("start application:", err)
+	}
 }
