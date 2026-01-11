@@ -1,6 +1,6 @@
 package config
 
-type App struct {
+type Config struct {
 	Text string
 	Port int
 }
