@@ -1,0 +1,34 @@
+---
+name: Lint and Tests
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: latest
+          args: ./... -v
+
+  tests:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: go mod tidy
+
+      - name: Go tests
+        run: go test ./... -v
