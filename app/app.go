@@ -9,29 +9,34 @@ import (
 )
 
 type App struct {
-	e *gin.Engine
+	e   *gin.Engine
 	cfg *config.Config
 }
 
 func New(cfg *config.Config) *App {
 	e := gin.Default()
+	gin.SetMode(gin.ReleaseMode)
 
 	e.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": cfg.Text})
 	})
 
 	e.GET("/ready", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"ready": true})
+		c.JSON(http.StatusOK, gin.H{"message": "ready"})
 	})
 
 	e.GET("/health", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"status": "health"})
+		c.JSON(http.StatusOK, gin.H{"message": "health"})
 	})
 
 	return &App{
 		e:   e,
 		cfg: cfg,
 	}
+}
+
+func (a *App) Handler() http.Handler {
+	return a.e.Handler()
 }
 
 func (a *App) Start() error {
