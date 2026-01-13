@@ -8,6 +8,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func init() {
+	gin.SetMode(gin.ReleaseMode)
+}
+
 type App struct {
 	e   *gin.Engine
 	cfg *config.Config
@@ -15,7 +19,6 @@ type App struct {
 
 func New(cfg *config.Config) *App {
 	e := gin.Default()
-	gin.SetMode(gin.ReleaseMode)
 
 	e.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": cfg.Text})
