@@ -17,14 +17,14 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.25'
+          go-version: '1.25.10'
           cache: true
 
       - name: lint
-        uses: golangci/golangci-lint-action@v3
+        uses: golangci/golangci-lint-action@v6
         with:
-          version: latest
-          args: ./... -v
+          version: v1.64.8
+          args: --timeout=5m
 
   tests:
     runs-on: self-hosted
@@ -35,7 +35,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.25'
+          go-version: '1.25.10'
           cache: true
           
       - name: Install dependencies
