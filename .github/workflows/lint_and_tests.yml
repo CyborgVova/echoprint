@@ -13,6 +13,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+          cache: true
 
       - name: lint
         uses: golangci/golangci-lint-action@v3
@@ -21,14 +27,19 @@ jobs:
           args: ./... -v
 
   tests:
-    needs: lint
     runs-on: self-hosted
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-
+        uses: actions/checkout@v4
+        
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+          cache: true
+          
       - name: Install dependencies
-        run: go mod tidy
+        run: go mod download
 
       - name: Go tests
         run: go test ./... -v
